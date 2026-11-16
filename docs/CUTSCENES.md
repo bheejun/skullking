@@ -208,7 +208,7 @@ assets/cutscenes/<파일키>.webp   ← 포스터
 **PROMPT:**
 > Night harbor celebration: golden fireworks burst over the sea; the ship's cannons fire bursts of gold confetti; the camera pushes in on an open treasure chest overflowing with coins, flanked by golden laurel branches; the friendly crowned Skull King rises from behind the chest and gives a big cheerful salute. Ends in a composition matching the winner illustration: crowned skull above the treasure chest within gold laurels, sparks twinkling.
 
-**포스터:** 기존 `assets/illustrations/winner.webp`를 사용해도 됩니다.
+**포스터:** 영상의 마지막 장면. 기존 `winner` 일러스트를 그대로 쓰려면 `assets/illustrations/winner.webp`를 `assets/cutscenes/victory.webp`로 복사하세요. (종료 화면에도 같은 그림이 나오므로 별도 제작을 권장)
 
 **자막(앱):** "{이름} 우승! {점수}점"
 
@@ -224,3 +224,12 @@ assets/cutscenes/<파일키>.webp   ← 포스터
 4. 나머지
 
 파일이 없는 컷신은 앱에서 자동으로 생략되므로, 만든 것부터 하나씩 넣어도 됩니다.
+
+## 5. 넣은 파일 확인하기
+
+앱의 **홈 → 설정 → 컷신 미리보기**에서 컷신마다 ▶ 재생을 누르면 예시 자막과 함께 바로 볼 수 있습니다.
+영상이 있으면 영상, 포스터만 있으면 포스터(천천히 확대), 둘 다 없으면 점선 자리표시가 나옵니다.
+
+- 관련 코드: `js/cutscenes.js` (목록, 발동 조건, 재생기)
+- 영상 준비가 2.5초 안에 끝나지 않으면(느린 네트워크) 포스터로 대신 보여줍니다.
+- 요-호-호 영상이 없거나 컷신을 끄면, 기존처럼 글자 카운트다운이 나옵니다.

@@ -6,11 +6,14 @@ import { DEFAULT_TOTAL_ROUNDS, RULESET } from './rules.js';
 const KEY = 'skullking:data';
 const SCHEMA_VERSION = 1;
 
-const empty = () => ({ schemaVersion: SCHEMA_VERSION, players: {}, games: {}, activeGameId: null });
+const defaultSettings = () => ({ cutscenes: true });
+
+const empty = () => ({ schemaVersion: SCHEMA_VERSION, players: {}, games: {}, activeGameId: null, settings: defaultSettings() });
 
 function migrate(d) {
   if (!d || typeof d !== 'object' || !d.schemaVersion) return empty();
   // 향후 스키마 변경 시 여기서 버전별 변환
+  d.settings = { ...defaultSettings(), ...d.settings };
   return d;
 }
 
@@ -36,6 +39,16 @@ function persist() {
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
 export const store = {
+  // ── 설정 ──
+  getSettings() {
+    return data.settings;
+  },
+
+  updateSettings(patch) {
+    Object.assign(data.settings, patch);
+    persist();
+  },
+
   // ── 플레이어 ──
   getPlayer(id) {
     return data.players[id] ?? { id, name: '(알 수 없음)', colorIndex: 0 };

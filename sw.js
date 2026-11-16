@@ -7,10 +7,11 @@ self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  if (req.headers.has('range')) return; // 영상 부분 요청은 브라우저에 맡김
   e.respondWith(
     fetch(req)
       .then((res) => {
-        if (res.ok) {
+        if (res.status === 200) {
           const copy = res.clone();
           caches.open(CACHE).then((c) => c.put(req, copy));
         }

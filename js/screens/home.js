@@ -19,6 +19,7 @@ export default {
         <div class="row">
           <button class="btn ghost" data-action="nav" data-to="rules">규칙 요약</button>
           <button class="btn ghost" data-action="nav" data-to="history">게임 기록</button>
+          <button class="btn ghost" data-action="nav" data-to="settings">설정</button>
         </div>
       </div>
     </main>`;

@@ -3,6 +3,9 @@ import {
   rawBonus, scorePlayerRound, seatOrder, totalsByPlayer,
 } from '../rules.js';
 import { assetSlot, avatar, confirmDialog, esc, fmtScore, numberChips, stepper, toast, topBar, yoHoHo } from '../ui.js';
+import { detectRoundEvents, playCutscenes, victoryEvent } from '../cutscenes.js';
+
+const MAX_ROUND_CUTSCENES = 2;
 
 // 화면 로컬 상태 (저장하지 않음)
 let openBonus = new Set();
@@ -213,7 +216,9 @@ export default {
       editBid.has(pid) ? editBid.delete(pid) : editBid.add(pid);
       ctx.rerender();
     },
-    yohoho: () => yoHoHo(),
+    async yohoho() {
+      if (!(await playCutscenes([{ key: 'yohoho' }]))) yoHoHo(); // 영상이 없거나 컷신을 끄면 글자 카운트다운
+    },
     timer(el) {
       if (timer) return stopTimer(), (el.textContent = timerLabel());
       timer = { left: TIMER_SEC };
@@ -265,16 +270,21 @@ export default {
         toast(`${n}라운드 수정 완료`);
         return ctx.back();
       }
+      const events = detectRoundEvents(game, n);
       if (n < game.settings.totalRounds) {
         game.currentRound = n + 1;
         game.phase = 'bid';
         ctx.store.saveGame(game);
         resetLocal();
-        toast(`${n}라운드 점수 반영 완료`);
         ctx.rerender();
         window.scrollTo(0, 0);
+        const scenes = events.slice(0, MAX_ROUND_CUTSCENES);
+        if (n + 1 === game.settings.totalRounds) scenes.push({ key: 'final-round', caption: '마지막 라운드!' });
+        await playCutscenes(scenes);
+        toast(`${n}라운드 점수 반영 완료`);
       } else {
         ctx.store.finishGame(game, buildResult(game));
+        await playCutscenes([...events.slice(0, 1), victoryEvent(game)]);
         ctx.go('end', { gameId: game.id }, { replace: true });
       }
     },

@@ -1,5 +1,6 @@
 import { MAX_PLAYERS, MIN_PLAYERS, DEFAULT_TOTAL_ROUNDS } from '../rules.js';
 import { avatar, esc, toast, topBar } from '../ui.js';
+import { playCutscenes } from '../cutscenes.js';
 
 let draft = null; // { seats: [playerId], firstDealerIndex }
 
@@ -104,6 +105,7 @@ export default {
     start(_, ctx) {
       ctx.store.createGame({ playerIds: draft.seats, firstDealerIndex: draft.firstDealerIndex });
       ctx.go('round', {}, { replace: true });
+      playCutscenes([{ key: 'voyage-start' }]);
     },
   },
 };

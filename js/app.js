@@ -8,8 +8,9 @@ import scoreboard from './screens/scoreboard.js';
 import end from './screens/end.js';
 import rules from './screens/rules.js';
 import history from './screens/history.js';
+import settings from './screens/settings.js';
 
-const screens = { home, setup, round, scoreboard, end, rules, history };
+const screens = { home, setup, round, scoreboard, end, rules, history, settings };
 const appEl = document.getElementById('app');
 
 let route = { name: 'home', params: {} };
