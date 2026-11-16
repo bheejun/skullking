@@ -1,5 +1,5 @@
 import { scorePlayerRound, standings } from '../rules.js';
-import { avatar, esc, fmtScore, topBar } from '../ui.js';
+import { avatar, confirmDeleteActive, esc, fmtScore, topBar } from '../ui.js';
 
 function getGame(ctx) {
   return ctx.params.gameId ? ctx.store.getGame(ctx.params.gameId) : ctx.store.getActiveGame();
@@ -47,11 +47,18 @@ export default {
       <div class="stack">
         ${live ? `<button class="btn primary" data-action="nav" data-to="round">게임으로 돌아가기</button>` : ''}
         <button class="btn ghost" data-action="nav" data-to="home">홈</button>
+        ${live ? '<button class="btn ghost danger-text" data-action="deleteGame">게임 중단</button>' : ''}
       </div>
     </main>`;
   },
 
   actions: {
+    async deleteGame(_, ctx) {
+      if (await confirmDeleteActive()) {
+        ctx.store.deleteActive();
+        ctx.go('home', {}, { replace: true });
+      }
+    },
     editRound(el, ctx) {
       const game = getGame(ctx);
       ctx.go('round', { gameId: game.id, roundNumber: +el.dataset.n });

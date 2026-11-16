@@ -95,6 +95,15 @@ export function confirmDialog({ title, message = '', ok = '확인', cancel = '�
   });
 }
 
+export function confirmDeleteActive() {
+  return confirmDialog({
+    title: '진행 중인 게임을 중단할까요?',
+    message: '지금까지 입력한 점수가 모두 삭제되고 기록에도 남지 않아요. 되돌릴 수 없어요.',
+    ok: '중단하고 삭제',
+    danger: true,
+  });
+}
+
 /** "요-호-호!" 비드 공개 카운트다운 */
 export function yoHoHo() {
   const root = modalRoot();

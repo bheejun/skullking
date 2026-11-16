@@ -117,12 +117,9 @@ export const store = {
     this.saveGame(game);
   },
 
-  abandonActive() {
-    const g = this.getActiveGame();
-    if (g) {
-      g.status = 'abandoned';
-      g.updatedAt = Date.now();
-    }
+  /** 진행 중인 게임을 완전히 삭제 (기록에도 남지 않음) */
+  deleteActive() {
+    if (data.activeGameId) delete data.games[data.activeGameId];
     data.activeGameId = null;
     persist();
   },
