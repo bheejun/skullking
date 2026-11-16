@@ -180,6 +180,7 @@ small { font-size: 0.78em; }
 /* ── 라운드 ── */
 .round-banner { position: relative; border-radius: var(--radius); overflow: hidden; }
 .round-banner .banner { position: absolute; inset: 0; aspect-ratio: auto; height: 100%; border-radius: var(--radius); }
+.round-banner .banner img { object-fit: cover; object-position: right center; }
 .round-banner .banner .asset-info { position: absolute; top: 6px; right: 8px; align-items: flex-end; opacity: 0.7; font-size: 0.75rem; }
 .round-meta { position: relative; padding: 18px 16px 14px; display: flex; flex-direction: column; gap: 6px; }
 .round-no { font-size: 0.85rem; letter-spacing: 0.15em; color: var(--muted); }
