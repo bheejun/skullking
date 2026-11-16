@@ -3,3 +3,14 @@ node_modules/
 .DS_Store
 Thumbs.db
 originals/
+
+# 에셋 제작용 원본·도구 (로컬 보관)
+art-source/
+tools/
+assets/cutscenes/*.json
+docs/asset-contact-sheet.png
+docs/asset-generation-manifest.json
+docs/cutscene-contact-sheet.png
+docs/cutscene-filmstrip.png
+docs/cutscene-preview.html
+docs/CUTSCENES-DELIVERY.md
